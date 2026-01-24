@@ -1,7 +1,7 @@
-# [<img src="./browser/icon.png" width="40" align="left" alt="Equicord">](https://github.com/Equicord/Equicord) Equicord
+# [<img src="./browser/icon.png" width="40" align="left" alt="Equicord">](https://github.com/pastelrbx/Femcord) Equicord
 
 [![Equibop](https://img.shields.io/badge/Equibop-grey?style=flat)](https://github.com/Equicord/Equibop)
-[![Tests](https://github.com/Equicord/Equicord/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/Equicord/Equicord/actions/workflows/test.yml)
+[![Tests](https://github.com/pastelrbx/Femcord/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/pastelrbx/Femcord/actions/workflows/test.yml)
 [![Discord](https://img.shields.io/discord/1173279886065029291.svg?color=768AD4&label=Discord&logo=discord&logoColor=white)](https://equicord.org/discord)
 
 Equicord is a fork of [Vencord](https://github.com/Vendicated/Vencord), with over 300+ plugins.
@@ -30,7 +30,7 @@ Linux
 - [AUR](https://aur.archlinux.org/packages?O=0&K=equicord)
 
 ```shell
-sh -c "$(curl -sS https://raw.githubusercontent.com/Equicord/Equicord/refs/heads/main/misc/install.sh)"
+sh -c "$(curl -sS https://raw.githubusercontent.com/pastelrbx/Femcord/refs/heads/main/misc/install.sh)"
 ```
 
 ## Installing Equicord Devbuild
@@ -52,7 +52,7 @@ npm i -g pnpm
 Clone Equicord:
 
 ```shell
-git clone https://github.com/Equicord/Equicord
+git clone https://github.com/pastelrbx/Femcord
 cd Equicord
 ```
 
@@ -90,11 +90,11 @@ Thank you to [Vendicated](https://github.com/Vendicated) for creating [Vencord](
 
 ## Star History
 
-<a href="https://star-history.com/#Equicord/Equicord&Timeline">
+<a href="https://star-history.com/#pastelrbx/Femcord&Timeline">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Equicord/Equicord&type=Timeline&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Equicord/Equicord&type=Timeline" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Equicord/Equicord&type=Timeline" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=pastelrbx/Femcord&type=Timeline&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=pastelrbx/Femcord&type=Timeline" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=pastelrbx/Femcord&type=Timeline" />
   </picture>
 </a>
 
