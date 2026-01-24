@@ -1252,7 +1252,7 @@ export const EquicordDevs = Object.freeze({
 } satisfies Record<string, Dev>);
 
 export const FemcordDevs = Object.freeze({
-    nobody: {
+    Blue: {
         name: "blueworldclass",
         id: 1425013333173735447n
     }
