@@ -47,7 +47,7 @@ function CheckBadge({ badge, author }: { badge: string; author: User; }): JSX.El
                         src={"https://raw.githubusercontent.com/pastelrbx/Femcord/refs/heads/main/assets/astolfo.png"}
                     />
                 </span>
-            );
+            ) : null;
         case "FemcordContributer":
             return isFemcordPluginDev(author.id) ? (
                 <span style={{ order: settings.store.FemcordContributorPosition }}>
