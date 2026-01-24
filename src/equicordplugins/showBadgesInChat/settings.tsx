@@ -20,7 +20,7 @@ const settings = definePluginSettings({
         type: OptionType.NUMBER,
         description: "The position of the Femcord Contributor badge.",
         hidden: true,
-        default: 1
+        default: 0
     },
     showEquicordDonor: {
         type: OptionType.BOOLEAN,
@@ -32,7 +32,7 @@ const settings = definePluginSettings({
         type: OptionType.NUMBER,
         description: "The position of the Equicord Donor badges.",
         hidden: true,
-        default: 4
+        default: 3
     },
     showEquicordContributor: {
         type: OptionType.BOOLEAN,
@@ -44,7 +44,7 @@ const settings = definePluginSettings({
         type: OptionType.NUMBER,
         description: "The position of the Equicord Contributor badge.",
         hidden: true,
-        default: 5
+        default: 4
     },
     showVencordDonor: {
         type: OptionType.BOOLEAN,
@@ -56,7 +56,7 @@ const settings = definePluginSettings({
         type: OptionType.NUMBER,
         description: "The position of the Vencord Donor badges.",
         hidden: true,
-        default: 6
+        default: 5
     },
     showVencordContributor: {
         type: OptionType.BOOLEAN,
@@ -68,7 +68,7 @@ const settings = definePluginSettings({
         type: OptionType.NUMBER,
         description: "The position of the Vencord Contributor badge.",
         hidden: true,
-        default: 7
+        default: 6
     },
     showDiscordProfile: {
         type: OptionType.BOOLEAN,
@@ -80,7 +80,7 @@ const settings = definePluginSettings({
         type: OptionType.NUMBER,
         description: "The position of the Discord profile badges.",
         hidden: true,
-        default: 8
+        default: 7
     },
     showDiscordNitro: {
         type: OptionType.BOOLEAN,
@@ -92,7 +92,7 @@ const settings = definePluginSettings({
         type: OptionType.NUMBER,
         description: "The position of the Discord Nitro badge.",
         hidden: true,
-        default: 9
+        default: 8
     },
     badgeSettings: {
         type: OptionType.COMPONENT,
