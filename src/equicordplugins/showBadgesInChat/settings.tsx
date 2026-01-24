@@ -10,18 +10,6 @@ import { OptionType } from "@utils/types";
 import { useEffect, UserStore, useState } from "@webpack/common";
 
 const settings = definePluginSettings({
-    showFemcordUser: {
-        type: OptionType.BOOLEAN,
-        description: "Enable to show Femcord User badges in chat.",
-        hidden: true,
-        default: true
-    },
-    FemcordUserPosition: {
-        type: OptionType.NUMBER,
-        description: "The position of the Femcord User badges.",
-        hidden: true,
-        default: 0
-    },
     showFemcordContributor: {
         type: OptionType.BOOLEAN,
         description: "Enable to show Femcord Contributor badges in chat.",
@@ -117,7 +105,6 @@ export default settings;
 
 const BadgeSettings = () => {
     const [images, setImages] = useState([
-        { src: "https://raw.githubusercontent.com/pastelrbx/Femcord/refs/heads/main/assets/astolfo.png", shown: settings.store.showFemcordUser, title: "Femcord user badges", key: "FemcordUser", position: settings.store.FemcordUserPosition },
         { src: "https://raw.githubusercontent.com/pastelrbx/Femcord/refs/heads/main/assets/astolfo.png", shown: settings.store.showFemcordContributor, title: "Femcord contributor badge", key: "FemcordContributer", position: settings.store.FemcordContributorPosition },
         { src: "https://badge.equicord.org/donor.webp", shown: settings.store.showEquicordDonor, title: "Equicord donor badges", key: "EquicordDonor", position: settings.store.EquicordDonorPosition },
         { src: "https://equicord.org/assets/favicon.png", shown: settings.store.showEquicordContributor, title: "Equicord contributor badge", key: "EquicordContributer", position: settings.store.EquicordContributorPosition },

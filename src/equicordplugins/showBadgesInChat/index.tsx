@@ -37,17 +37,6 @@ const discordBadges: readonly [number, string, string][] = Object.freeze([
 function CheckBadge({ badge, author }: { badge: string; author: User; }): JSX.Element | null {
 
     switch (badge) {
-        case "FemcordUser":
-            return true ? ( // fix later thankksss
-                <span style={{ order: settings.store.FemcordUserPosition }}>
-                    <RoleIconComponent
-                        className={roleIcon}
-                        name="Femcord User"
-                        size={20}
-                        src={"https://raw.githubusercontent.com/pastelrbx/Femcord/refs/heads/main/assets/astolfo.png"}
-                    />
-                </span>
-            ) : null;
         case "FemcordContributer":
             return isFemcordPluginDev(author.id) ? (
                 <span style={{ order: settings.store.FemcordContributorPosition }}>
