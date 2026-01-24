@@ -50,23 +50,26 @@ jobs:
               run: |
                   cd dist
                   mkdir release
-
                   cp browser/browser.* release
                   cp Equicord.user.{js,js.LEGAL.txt} release
-
                   # copy the plugin data jsons, the extension zips and the desktop/vesktop asars
                   cp *.{json,zip,asar} release
-
                   # legacy un-asared files
                   cp desktop/* release
                   for file in equibop/*; do
                     filename=$(basename "$file")
                     cp "$file" "release/equibop${filename^}"
                   done
-
                   find release -size 0 -delete
                   rm release/package.json
                   rm release/*.map
+
+            - name: Ensure latest release exists
+              run: |
+                  set -e
+                  # Create the release if missing; otherwise just continue.
+                  gh release view latest >/dev/null 2>&1 || \
+                    gh release create latest --title "Latest" --notes "Automated build from main" --latest
 
             - name: Upload Equicord Stable
               run: |
@@ -78,9 +81,7 @@ jobs:
                   git config --global user.email actions@github.com
                   git clone https://$USERNAME:$GITHUB_TOKEN@github.com/$REPO.git plugins
                   cd plugins
-
                   cp ../dist/release/*.json .
                   git add -A
-
                   git commit -m "Plugins for https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
                   git push --force https://$USERNAME:$GITHUB_TOKEN@github.com/$REPO.git
