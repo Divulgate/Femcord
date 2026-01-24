@@ -1,7 +1,7 @@
 {
-    "name": "equicord",
+    "name": "femcord",
     "private": "true",
-    "version": "1.14.1.0",
+    "version": "1.14.1.1",
     "description": "The other cutest Discord client mod",
     "homepage": "https://github.com/pastelrbx/Femcord#readme",
     "bugs": {
@@ -12,7 +12,7 @@
         "url": "git+https://github.com/pastelrbx/Femcord.git"
     },
     "license": "GPL-3.0-or-later",
-    "author": "Equicord",
+    "author": "pastelrbx",
     "scripts": {
         "build": "node --require=./scripts/suppressExperimentalWarnings.js scripts/build/build.mjs",
         "buildStandalone": "pnpm build --standalone",
@@ -25,7 +25,7 @@
         "watchWeb": "pnpm buildWeb --watch",
         "generateDevsList": "tsx scripts/generateDevsList.ts",
         "generatePluginJson": "tsx scripts/generatePluginList.ts",
-        "generateFemcordPluginJson": "tsx scripts/generatePluginList.ts --equicord",
+        "generateFemcordPluginJson": "tsx scripts/generatePluginList.ts --femcord",
         "generateEquicordPluginJson": "tsx scripts/generatePluginList.ts --equicord",
         "generateVencordPluginJson": "tsx scripts/generatePluginList.ts --vencord",
         "generateTypes": "tspc --emitDeclarationOnly --declaration --outDir packages/vencord-types --allowJs false",

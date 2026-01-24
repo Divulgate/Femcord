@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name            Equicord
+// @name            Femcord
 // @description     A Discord client mod - Web version
 // @version         %version%
-// @author          Equicord (https://github.com/Equicord)
+// @author          pastelrbx (https://github.com/pastelrbx)
 // @namespace       https://github.com/pastelrbx/Femcord
 // @supportURL      https://github.com/pastelrbx/Femcord
 // @icon            https://raw.githubusercontent.com/pastelrbx/Femcord/refs/heads/main/browser/icon.png
@@ -23,4 +23,4 @@
 // to overwrite stuff on the window on sites that use CSP. Use Tampermonkey or use a chromium based browser
 // https://github.com/violentmonkey/violentmonkey/issues/997
 
-// this is a compiled and minified version of Equicord. For the source code, visit the GitHub repo
+// this is a compiled and minified version of Femcord. For the source code, visit the GitHub repo
