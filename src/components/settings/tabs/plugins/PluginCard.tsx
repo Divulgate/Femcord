@@ -97,7 +97,7 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
             condition: isModifiedFemcordPlugin,
             src: "https://raw.githubusercontent.com/pastelrbx/Femcord/refs/heads/main/assets/astolfo.png",
             alt: "Modified",
-            title: "Modified Vencord Plugin (Femcord)"
+            title: "Modified Vencord/Equicord Plugin (Femcord)"
         },
         {
             condition: isFemcordPlugin,
