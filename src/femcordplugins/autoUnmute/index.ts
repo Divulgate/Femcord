@@ -1,13 +1,13 @@
 import definePlugin from "@utils/types";
+import { findByPropsLazy, findStoreLazy } from "@webpack";
 import {
-    findByPropsLazy,
-    findStoreLazy,
     UserStore,
     PermissionStore,
     PermissionsBits,
     ChannelStore,
+    RestAPI,
+    Constants,
 } from "@webpack/common";
-import { RestAPI, Constants, SelectedGuildStore } from "@webpack/common";
 import { TestcordDevs } from "@utils/constants";
 
 // Retrieval of necessary stores and actions
