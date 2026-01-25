@@ -9,16 +9,17 @@ import "./styles.css";
 import { definePluginSettings, migratePluginSettings } from "@api/Settings";
 import { classNameFactory } from "@api/Styles";
 import ErrorBoundary from "@components/ErrorBoundary";
-import { Devs } from "@utils/constants";
+import { Devs, FemcordDevs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
 import { findByPropsLazy, findComponentByCodeLazy, findStoreLazy } from "@webpack";
-import { PresenceStore, React, Tooltip, useEffect, useMemo, UserStore, useState, useStateFromStores } from "@webpack/common";
-import { User } from "discord-types/general";
+import { PresenceStore, Tooltip, useEffect, useMemo, UserStore, useState, useStateFromStores } from "@webpack/common";
+import { User } from "@vencord/discord-types";
 
 import { Caret } from "./components/Caret";
 import { SpotifyIcon } from "./components/SpotifyIcon";
 import { TwitchIcon } from "./components/TwitchIcon";
 import { Activity, ActivityListIcon, Application, ApplicationIcon, IconCSSProperties } from "./types";
+import { JSX } from "react/jsx-dev-runtime";
 
 const settings = definePluginSettings({
     memberList: {
@@ -239,12 +240,13 @@ export default definePlugin({
     authors: [
         Devs.D3SOX,
         Devs.Arjix,
-        Devs.AutumnVN
+        Devs.AutumnVN,
+        FemcordDevs.Blue
     ],
     tags: ["activity"],
 
     settings,
-
+    
     patchActivityList: ({ activities, user }: { activities: Activity[], user: User; }): JSX.Element | null => {
         const icons: ActivityListIcon[] = [];
 

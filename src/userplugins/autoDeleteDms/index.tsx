@@ -17,7 +17,7 @@
 */
 
 import { definePluginSettings } from "@api/Settings";
-import { EquicordDevs } from "@utils/constants";
+import { EquicordDevs, FemcordDevs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
 import { findByPropsLazy } from "@webpack";
 import { FluxDispatcher } from "@webpack/common";
@@ -71,7 +71,7 @@ interface DiscordAPIError {
 export default definePlugin({
     name: "AutoDeleteDMs",
     description: "Automatically deletes DMs after a specified time period",
-    authors: [EquicordDevs.ExoDev],
+    authors: [/*EquicordDevs.ExoDev, */FemcordDevs.Blue],
     settings,
 
     messageTimestamps: new Map<string, { timestamp: number, userId: string, channelId: string; }>(),

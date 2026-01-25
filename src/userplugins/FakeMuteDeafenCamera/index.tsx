@@ -6,7 +6,7 @@
 
 import { definePluginSettings } from "@api/Settings";
 import { UserAreaButton } from "@api/UserArea";
-import { Devs, TestcordDevs } from "@utils/constants";
+import { Devs, FemcordDevs, TestcordDevs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
 import { findByPropsLazy } from "@webpack";
 import { Menu, React } from "@webpack/common";
@@ -114,7 +114,7 @@ function FakeActionsButton() {
         (buttonControlsVideo && activeState.video);
 
     const handleToggle = () => {
-        const targets = [];
+        const targets = Array<string>();
         if (buttonControlsMute) targets.push("mute");
         if (buttonControlsDeaf) targets.push("deaf");
         if (buttonControlsVideo) targets.push("video");
@@ -133,7 +133,7 @@ function FakeActionsButton() {
 
     return (
         <UserAreaButton
-            label="Fake Actions"
+            // label="Fake Actions"
             tooltipText={isAnyActive ? "Disable Active Fake Actions" : "Enable Configured Fake Actions"}
             icon={<FakeDeafenIcon enabled={isAnyActive} />}
             onClick={handleToggle}
@@ -148,7 +148,7 @@ const StateKeys = ["selfDeaf", "selfMute", "selfVideo"];
 export default definePlugin({
     name: "FakeMuteDeafenCamera",
     description: "Fake mute, deafen & Camera. Configure button behavior in Settings. Contributed by Chaython.",
-    authors: [TestcordDevs.x2b],
+    authors: [TestcordDevs.x2b, FemcordDevs.Blue],
     settings,
     
     modifyVoiceState(e: any) {

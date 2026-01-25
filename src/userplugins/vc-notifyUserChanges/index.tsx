@@ -7,11 +7,11 @@
 import { NavContextMenuPatchCallback } from "@api/ContextMenu";
 import { showNotification } from "@api/Notifications";
 import { definePluginSettings, Settings } from "@api/Settings";
-import { Devs } from "@utils/constants";
+import { Devs, FemcordDevs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
 import { findByPropsLazy, findStoreLazy } from "@webpack";
 import { Menu, PresenceStore, React, SelectedChannelStore, Tooltip, UserStore } from "@webpack/common";
-import type { Channel, User } from "discord-types/general";
+import type { Channel, DiscordPlatform, OnlineStatus, User } from "@vencord/discord-types";
 import { CSSProperties } from "react";
 
 import { NotificationsOffIcon } from "./components/NotificationsOffIcon";
@@ -126,17 +126,19 @@ const PlatformIndicator = ({ user, wantMargin = true, wantTopMargin = false, sma
             return 0;
         });
 
-        const ownStatus = Object.values(sortedSessions).reduce((acc: any, curr: any) => {
-            if (curr.clientInfo.client !== "unknown")
-                acc[curr.clientInfo.client] = curr.status;
-            return acc;
-        }, {});
+        const ownStatus: Partial<Record<DiscordPlatform, OnlineStatus>> = {};
+        for (const curr of Object.values(sortedSessions)) {
+            const client = (curr as any)?.clientInfo?.client as DiscordPlatform | "unknown" | "console" | undefined;
+            if (client && client !== "unknown" && client !== "console") {
+                ownStatus[client] = (curr as any).status as OnlineStatus;
+            }
+        }
 
         const { clientStatuses } = PresenceStore.getState();
         clientStatuses[UserStore.getCurrentUser().id] = ownStatus;
     }
 
-    const status = PresenceStore.getState()?.clientStatuses?.[user.id] as Record<Platform, string>;
+    const status = PresenceStore.getState()?.clientStatuses?.[user.id] as Partial<Record<DiscordPlatform, OnlineStatus>> | undefined;
     if (!status) return null;
 
     const icons = Object.entries(status).map(([platform, status]) => (
@@ -284,7 +286,7 @@ const lastStatuses = new Map<string, string>();
 export default definePlugin({
     name: "NotifyUserChanges",
     description: "Adds a notify option in the user context menu to get notified when a user changes voice channels or online status",
-    authors: [Devs.D3SOX],
+    authors: [Devs.D3SOX, FemcordDevs.Blue],
 
     settings,
 

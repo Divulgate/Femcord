@@ -122,5 +122,9 @@
     },
     "engines": {
         "node": ">=18"
+    },
+    "resolutions": {
+        "@types/node": "24.10.9",
+        "standalone-electron-types": "COMPATIBLE_VERSION"
     }
 }

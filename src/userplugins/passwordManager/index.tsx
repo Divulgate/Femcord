@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { BaseText } from "@components/index";
 import "./styles.css";
 
 import { DataStore } from "@api/index";
-import { EquicordDevs } from "@utils/constants";
+import { /*EquicordDevs, */FemcordDevs } from "@utils/constants";
 import * as Modal from "@utils/modal";
 import definePlugin from "@utils/types";
 // REMOVED "Flex" from the import below
@@ -451,16 +452,16 @@ const ViewPasswordModal = ({
                         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                             <div className="password-view-section">
                                 <Text variant="heading-sm/medium">Username</Text>
-                                <Text selectable>{entry.username}</Text>
+                                <Text>{entry.username}</Text>
                             </div>
                             <div className="password-view-section">
                                 <Text variant="heading-sm/medium">Password</Text>
-                                <Text selectable>{entry.password}</Text>
+                                <Text>{entry.password}</Text>
                             </div>
                             {entry.twoFactorSecret && (
                                 <div className="password-view-section">
                                     <Text variant="heading-sm/medium">2FA Secret</Text>
-                                    <Text selectable>{entry.twoFactorSecret}</Text>
+                                    <Text>{entry.twoFactorSecret}</Text>
                                 </div>
                             )}
                         </div>
@@ -669,7 +670,7 @@ class PasswordManagerUI {
 export default definePlugin({
     name: "PasswordManager",
     description: "Securely store and manage your passwords",
-    authors: [EquicordDevs.ExoDev],
+    authors: [/*EquicordDevs.ExoDev, */FemcordDevs.Blue],
 
     passwordManager: null as PasswordManager | null,
     ui: null as PasswordManagerUI | null,

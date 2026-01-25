@@ -17,10 +17,11 @@
 */
 
 import { addChatBarButton, ChatBarButton, removeChatBarButton } from "@api/ChatButtons";
+import type { ChatBarButtonFactory } from "@api/ChatButtons";
 import { ApplicationCommandInputType, ApplicationCommandOptionType, findOption, sendBotMessage } from "@api/Commands";
 import { definePluginSettings } from "@api/Settings";
-import { Devs } from "@utils/constants";
-import definePlugin, { OptionType } from "@utils/types";
+import { Devs, FemcordDevs } from "@utils/constants";
+import definePlugin, { IconComponent, OptionType } from "@utils/types";
 import { ChannelStore, FluxDispatcher, React } from "@webpack/common";
 
 const settings = definePluginSettings({
@@ -48,7 +49,7 @@ const settings = definePluginSettings({
     },
 });
 
-const SilentTypingToggle: ChatBarButton = ({ isMainChat, channel }) => {
+const SilentTypingToggle: ChatBarButtonFactory = ({ isMainChat, channel }) => {
     const { isEnabled, showIcon, specificChats, disabledFor } = settings.use(["isEnabled", "showIcon", "specificChats", "disabledFor"]);
     const id = channel.guild_id ?? channel.id;
 
@@ -111,6 +112,13 @@ const SilentTypingToggle: ChatBarButton = ({ isMainChat, channel }) => {
     );
 };
 
+const SilentTypingSettingsIcon: IconComponent = ({ width = 24, height = 24, className }) => (
+    <svg width={width} height={height} className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+        <path fill="currentColor"
+            d="M528 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM128 180v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm288 0v-40c0-6.627-5.373-12-12-12H172c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h232c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12z" />
+    </svg>
+);
+
 function getDisabledChannelsList(list = settings.store.disabledFor) {
     try {
         return list.split(",").map(x => x.trim()).filter(Boolean);
@@ -132,7 +140,7 @@ function isEnabled(channelId: string) {
 
 export default definePlugin({
     name: "SilentTyping",
-    authors: [Devs.Ven, Devs.Rini, Devs.D3SOX],
+    authors: [Devs.Ven, Devs.Rini, Devs.D3SOX, FemcordDevs.Blue],
     description: "Hide that you are typing",
     dependencies: ["ChatInputButtonAPI"],
     settings,
@@ -172,6 +180,6 @@ export default definePlugin({
         FluxDispatcher.dispatch({ type: "TYPING_START_LOCAL", channelId });
     },
 
-    start: () => addChatBarButton("SilentTyping", SilentTypingToggle),
+    start: () => addChatBarButton("SilentTyping", SilentTypingToggle, SilentTypingSettingsIcon),
     stop: () => removeChatBarButton("SilentTyping"),
 });

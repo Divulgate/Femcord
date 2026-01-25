@@ -4,37 +4,10 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import { CSSProperties, ImgHTMLAttributes } from "react";
+import { CSSProperties, ImgHTMLAttributes, JSX } from "react";
+import { Activity as DiscordActivity } from "@vencord/discord-types";
 
-export interface Timestamp {
-    start?: number;
-    end?: number;
-}
-
-export interface Activity {
-    created_at: number;
-    id: string;
-    name: string;
-    type: number;
-    emoji?: {
-        animated: boolean;
-        id: string;
-        name: string;
-    };
-    state?: string;
-    flags?: number;
-    sync_id?: string;
-    details?: string;
-    application_id?: string;
-    assets?: {
-        large_text?: string;
-        large_image?: string;
-        small_text?: string;
-        small_image?: string;
-    };
-    timestamps?: Timestamp;
-    platform?: string;
-}
+export type Activity = DiscordActivity;
 
 export interface Application {
     id: string;
