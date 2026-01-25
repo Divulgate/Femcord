@@ -90,8 +90,8 @@ importers:
         specifier: ^4.17.20
         version: 4.17.23
       '@types/node':
-        specifier: ^24.10.1
-        version: 24.10.9
+        specifier: latest
+        version: 25.0.10
       '@types/react':
         specifier: ^19.0.10
         version: 19.2.9
@@ -613,8 +613,8 @@ packages:
   '@types/node@22.19.7':
     resolution: {integrity: sha512-MciR4AKGHWl7xwxkBa6xUGxQJ4VBOmPTF7sL+iGzuahOFaO0jHCsuEfS80pan1ef4gWId1oWOweIhrDEYLuaOw==}
 
-  '@types/node@24.10.9':
-    resolution: {integrity: sha512-ne4A0IpG3+2ETuREInjPNhUGis1SFjv1d5asp8MzEAGtOZeTeHVDOYqOgqfhvseqg/iXty2hjBf1zAOb7RNiNw==}
+  '@types/node@25.0.10':
+    resolution: {integrity: sha512-zWW5KPngR/yvakJgGOmZ5vTBemDoSqF3AcV/LrO5u5wTWyEAVVh+IT39G4gtyAkh3CtTZs8aX/yRM82OfzHJRg==}
 
   '@types/prop-types@15.7.15':
     resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
@@ -2715,7 +2715,7 @@ snapshots:
 
   '@types/adm-zip@0.5.7':
     dependencies:
-      '@types/node': 24.10.9
+      '@types/node': 25.0.10
 
   '@types/chrome@0.1.36':
     dependencies:
@@ -2757,7 +2757,7 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
-  '@types/node@24.10.9':
+  '@types/node@25.0.10':
     dependencies:
       undici-types: 7.16.0
 
@@ -2782,18 +2782,18 @@ snapshots:
 
   '@types/stylus@0.48.43':
     dependencies:
-      '@types/node': 24.10.9
+      '@types/node': 25.0.10
 
   '@types/tinycolor2@1.4.6': {}
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 24.10.9
+      '@types/node': 25.0.10
     optional: true
 
   '@types/yazl@3.3.0':
     dependencies:
-      '@types/node': 24.10.9
+      '@types/node': 25.0.10
 
   '@typescript-eslint/eslint-plugin@8.53.1(@typescript-eslint/parser@8.53.1(eslint@9.39.1)(typescript@5.9.3))(eslint@9.39.1)(typescript@5.9.3)':
     dependencies:
