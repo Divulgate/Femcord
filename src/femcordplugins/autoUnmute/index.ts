@@ -6,8 +6,7 @@ import {
     PermissionsBits,
     ChannelStore,
 } from "@webpack/common";
-import { RestAPI, Constants } from "@webpack/common";
-import { SelectedGuildStore } from "@webpack/common";
+import { RestAPI, Constants, SelectedGuildStore } from "@webpack/common";
 import { TestcordDevs } from "@utils/constants";
 
 // Retrieval of necessary stores and actions

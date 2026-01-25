@@ -16,8 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { addChatBarButton, ChatBarButton, removeChatBarButton } from "@api/ChatButtons";
-import type { ChatBarButtonFactory } from "@api/ChatButtons";
+import { addChatBarButton, ChatBarButton, removeChatBarButton, ChatBarButtonFactory } from "@api/ChatButtons";
 import { ApplicationCommandInputType, ApplicationCommandOptionType, findOption, sendBotMessage } from "@api/Commands";
 import { definePluginSettings } from "@api/Settings";
 import { Devs, FemcordDevs } from "@utils/constants";
