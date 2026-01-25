@@ -645,7 +645,11 @@ export const Devs = /* #__PURE__*/ Object.freeze({
     u32: {
         name: "u32",
         id: 1063237286818488351n,
-    }
+    },
+    prism: {
+        name: "prism",
+        id: 390884143749136386n,
+    },
 } satisfies Record<string, Dev>);
 
 export const EquicordDevs = Object.freeze({
@@ -1210,9 +1214,9 @@ export const EquicordDevs = Object.freeze({
         name: "Vei",
         id: 239414094799699968n
     },
-    Prism: {
-        name: "Prism",
-        id: 390884143749136386n
+    prism: {
+        name: "prism",
+        id: 390884143749136386n,
     },
     square: {
         name: "square",
@@ -1250,10 +1254,13 @@ export const EquicordDevs = Object.freeze({
         name: "BioTomateDE",
         id: 553499669226061844n,
     },
-    prism: {
-        name: "prism",
-        id: 390884143749136386n,
-    },
+} satisfies Record<string, Dev>);
+
+export const FemcordDevs = Object.freeze({
+    Blue: {
+        name: "blueworldclass",
+        id: 1425013333173735447n
+    }
 } satisfies Record<string, Dev>);
 
 export const TestcordDevs = Object.freeze({
@@ -1287,6 +1294,14 @@ export const VencordDevsById = /* #__PURE__*/ (() =>
 export const EquicordDevsById = /* #__PURE__*/ (() =>
     Object.freeze(Object.fromEntries(
         Object.entries(EquicordDevs)
+            .filter(d => d[1].id !== 0n)
+            .map(([_, v]) => [v.id, v] as const)
+    ))
+)() as Record<string, Dev>;
+
+export const FemcordDevsById = /* #__PURE__*/ (() =>
+    Object.freeze(Object.fromEntries(
+        Object.entries(FemcordDevs)
             .filter(d => d[1].id !== 0n)
             .map(([_, v]) => [v.id, v] as const)
     ))
