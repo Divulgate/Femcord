@@ -71,7 +71,7 @@ async function applyUpdates() {
     if (!PendingUpdate) return true;
 
     const data = await fetchBuffer(PendingUpdate);
-    writeFileSync(__dirname, data, { flush: true });
+    writeFileSync(__dirname, data);
 
     PendingUpdate = null;
 
