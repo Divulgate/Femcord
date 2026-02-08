@@ -3,16 +3,16 @@
     "private": "true",
     "version": "1.14.2.0",
     "description": "The other cutest Discord client mod",
-    "homepage": "https://github.com/pastelrbx/Femcord#readme",
+    "homepage": "https://github.com/Divulgate/Femcord#readme",
     "bugs": {
-        "url": "https://github.com/pastelrbx/Femcord/issues"
+        "url": "https://github.com/Divulgate/Femcord/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/pastelrbx/Femcord.git"
+        "url": "git+https://github.com/Divulgate/Femcord.git"
     },
     "license": "GPL-3.0-or-later",
-    "author": "pastelrbx",
+    "author": "Divulgate",
     "scripts": {
         "build": "node --require=./scripts/suppressExperimentalWarnings.js scripts/build/build.mjs",
         "buildStandalone": "pnpm build --standalone",

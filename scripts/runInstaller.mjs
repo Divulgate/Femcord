@@ -66,7 +66,7 @@ async function ensureBinary() {
 
     const res = await fetch(BASE_URL + filename, {
         headers: {
-            "User-Agent": "Femcord (https://github.com/pastelrbx/Femcord)",
+            "User-Agent": "Femcord (https://github.com/Divulgate/Femcord)",
             "If-None-Match": etag
         }
     });

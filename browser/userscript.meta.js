@@ -2,10 +2,10 @@
 // @name            Femcord
 // @description     A Discord client mod - Web version
 // @version         %version%
-// @author          pastelrbx (https://github.com/pastelrbx)
-// @namespace       https://github.com/pastelrbx/Femcord
-// @supportURL      https://github.com/pastelrbx/Femcord
-// @icon            https://raw.githubusercontent.com/pastelrbx/Femcord/refs/heads/main/browser/icon.png
+// @author          Divulgate (https://github.com/Divulgate)
+// @namespace       https://github.com/Divulgate/Femcord
+// @supportURL      https://github.com/Divulgate/Femcord
+// @icon            https://raw.githubusercontent.com/Divulgate/Femcord/refs/heads/main/browser/icon.png
 // @license         GPL-3.0
 // @match           *://*.discord.com/*
 // @grant           GM_xmlhttpRequest

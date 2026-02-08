@@ -44,7 +44,7 @@ function CheckBadge({ badge, author }: { badge: string; author: User; }): JSX.El
                         className={roleIcon}
                         name="Femcord Contributor"
                         size={20}
-                        src={"https://raw.githubusercontent.com/pastelrbx/Femcord/refs/heads/main/assets/astolfo.png"}
+                        src={"https://raw.githubusercontent.com/Divulgate/Femcord/refs/heads/main/assets/astolfo.png"}
                     />
                 </span>
             ) : null;

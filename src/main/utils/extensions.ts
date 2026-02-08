@@ -71,7 +71,7 @@ export async function installExt(id: string) {
 
         const buf = await fetchBuffer(url, {
             headers: {
-                "User-Agent": `Electron ${process.versions.electron} ~ Femcord (https://github.com/pastelrbx/Femcord)`
+                "User-Agent": `Electron ${process.versions.electron} ~ Femcord (https://github.com/Divulgate/Femcord)`
             }
         });
 

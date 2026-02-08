@@ -3,8 +3,8 @@
     "minimum_chrome_version": "91",
     "name": "Femcord Web",
     "description": "The other cutest Discord mod now in your browser",
-    "author": "pastelrbx",
-    "homepage_url": "https://github.com/pastelrbx/Femcord",
+    "author": "Divulgate",
+    "homepage_url": "https://github.com/Divulgate/Femcord",
     "icons": {
         "128": "icon.png"
     },

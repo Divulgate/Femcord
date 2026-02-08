@@ -94,13 +94,13 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
     const pluginInfo = [
         {
             condition: isModifiedFemcordPlugin,
-            src: "https://raw.githubusercontent.com/pastelrbx/Femcord/refs/heads/main/assets/astolfo.png",
+            src: "https://raw.githubusercontent.com/Divulgate/Femcord/refs/heads/main/assets/astolfo.png",
             alt: "Modified",
             title: "Modified Vencord/Equicord Plugin (Femcord)"
         },
         {
             condition: isFemcordPlugin,
-            src: "https://raw.githubusercontent.com/pastelrbx/Femcord/refs/heads/main/assets/astolfo.png",
+            src: "https://raw.githubusercontent.com/Divulgate/Femcord/refs/heads/main/assets/astolfo.png",
             alt: "Femcord",
             title: "Femcord Plugin"
         },
