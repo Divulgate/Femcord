@@ -135,7 +135,6 @@ async function generateDebugInfoMessage() {
     let clientString = `${clientInfo.name}`;
     clientString += `${clientInfo.version ? ` v${clientInfo.version}` : ""}`;
     clientString += `${clientInfo.info ? ` • ${clientInfo.info}` : ""}`;
-    clientString += `${clientInfo.shortHash ? ` • [${clientInfo.shortHash}](<https://github.com/Equicord/Equibop/commit/${clientInfo.hash}>)` : ""}`;
 
     const spoofInfo = IS_EQUIBOP ? tryOrElse(() => VesktopNative.app.getPlatformSpoofInfo?.(), null) : null;
     const platformDisplay = spoofInfo?.spoofed
@@ -143,8 +142,8 @@ async function generateDebugInfoMessage() {
         : platformName();
 
     const info = {
-        Equicord:
-            `v${VERSION} • [${gitHashShort}](<https://github.com/Equicord/Equicord/commit/${gitHash}>)` +
+        Femcord:
+            `v${VERSION} • [${gitHashShort}](<https://github.com/Divulgate/Femcord/commit/${gitHash}>)` +
             `${IS_EQUIBOP ? "" : SettingsPlugin.getVersionInfo()} - ${Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(BUILD_TIMESTAMP)}`,
         Client: `${RELEASE_CHANNEL} ~ ${clientString}`,
         Platform: platformDisplay
@@ -169,7 +168,7 @@ async function generateDebugInfoMessage() {
     const commonIssues = {
         "Activity Sharing Disabled": tryOrElse(() => !ShowCurrentGame.getSetting(), false),
         "Link Embeds Disabled": tryOrElse(() => !ShowEmbeds.getSetting(), false),
-        "Equicord DevBuild": !IS_STANDALONE,
+        "Femcord DevBuild": !IS_STANDALONE,
         "Equibop DevBuild": IS_EQUIBOP && tryOrElse(() => VesktopNative.app.isDevBuild?.(), false),
         "Platform Spoofed": spoofInfo?.spoofed ?? false,
         "Has UserPlugins": Object.values(PluginMeta).some(m => m.userPlugin),
@@ -248,14 +247,14 @@ export default definePlugin({
     commands: [
         {
             name: "equicord-debug",
-            description: "Send Equicord debug info",
+            description: "Send Femcord debug info",
             // @ts-ignore
             predicate: ctx => isAnyPluginDev(UserStore.getCurrentUser()?.id) || isEquicordGuild(ctx?.guild?.id, true),
             execute: async () => ({ content: await generateDebugInfoMessage() })
         },
         {
             name: "equicord-plugins",
-            description: "Send Equicord plugin list",
+            description: "Send Femcord plugin list",
             // @ts-ignore
             predicate: ctx => isAnyPluginDev(UserStore.getCurrentUser()?.id) || isEquicordGuild(ctx?.guild?.id, true),
             execute: () => {
@@ -280,7 +279,7 @@ export default definePlugin({
                     return Alerts.show({
                         title: "Hold on!",
                         body: <div>
-                            <Paragraph>You are using an outdated version of Equicord! Chances are, your issue is already fixed.</Paragraph>
+                            <Paragraph>You are using an outdated version of Femcord! Chances are, your issue is already fixed.</Paragraph>
                             <Paragraph className={Margins.top8}>
                                 Please first update before asking for support!
                             </Paragraph>
@@ -301,9 +300,9 @@ export default definePlugin({
                 return Alerts.show({
                     title: "Hold on!",
                     body: <div>
-                        <Paragraph>You are using an externally updated Equicord version, the ability to help you here may be limited.</Paragraph>
+                        <Paragraph>You are using an externally updated Femcord version, the ability to help you here may be limited.</Paragraph>
                         <Paragraph className={Margins.top8}>
-                            Please join the <Link href="https://equicord.org/discord">Equicord Server</Link> for support,
+                            Please join the <Link href="https://equicord.org/discord">Femcord Server</Link> for support,
                             or if this issue persists on Vencord, continue on.
                         </Paragraph>
                     </div>
@@ -314,11 +313,11 @@ export default definePlugin({
                 return Alerts.show({
                     title: "Hold on!",
                     body: <div>
-                        <Paragraph>You are using a custom build of Equicord, which we do not provide support for!</Paragraph>
+                        <Paragraph>You are using a custom build of Femcord, which we do not provide support for!</Paragraph>
 
                         <Paragraph className={Margins.top8}>
-                            We only provide support for <Link href="https://github.com/Equicord/Equicord">official builds</Link>.
-                            Either <Link href="https://github.com/Equicord/Equilotl">switch to an official build</Link> or figure your issue out yourself.
+                            We only provide support for <Link href="https://github.com/Divulgate/Femcord">official builds</Link>.
+                            Either <Link href="https://github.com/pastelrbx/Axolotl">switch to an official build</Link> or figure your issue out yourself.
                         </Paragraph>
 
                         <BaseText size="md" weight="bold" className={Margins.top8}>You will be banned from receiving support if you ignore this rule.</BaseText>
@@ -430,7 +429,7 @@ export default definePlugin({
 
         return (
             <Card variant="warning" className={Margins.top8} defaultPadding>
-                Please do not private message Equicord & Vencord plugin developers for support!
+                Please do not private message Femcord & Vencord plugin developers for support!
                 <br />
                 Instead, use the support channel: {Parser.parse("https://discord.com/channels/1173279886065029291/1297590739911573585")}
                 {!ChannelStore.getChannel(SUPPORT_CHANNEL_ID) && " (Click the link to join)"}
