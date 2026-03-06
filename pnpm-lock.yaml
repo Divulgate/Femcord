@@ -4593,11 +4593,6 @@ snapshots:
       es-errors: 1.3.0
       internal-slot: 1.1.0
 
-  stop-iteration-iterator@1.1.0:
-    dependencies:
-      es-errors: 1.3.0
-      internal-slot: 1.1.0
-
   streamx@2.23.0:
     dependencies:
       events-universal: 1.0.1
