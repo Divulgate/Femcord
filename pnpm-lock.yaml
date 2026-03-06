@@ -5126,7 +5126,5 @@ snapshots:
       jszip: 2.7.0
       q: 1.5.1
 
-  zod@3.25.76: {}
-
   zod@4.3.6:
     optional: true
