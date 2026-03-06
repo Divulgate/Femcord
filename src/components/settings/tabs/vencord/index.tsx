@@ -81,7 +81,7 @@ function EquicordSettings() {
                 restartRequired: true,
                 warning: { enabled: false },
             },
-            (!IS_WEB && !IS_DISCORD_DESKTOP || !IS_WINDOWS) && {
+            !IS_WEB && (!IS_DISCORD_DESKTOP || !IS_WINDOWS) && {
                 key: "mainWindowFrameless",
                 title: "Disable the Main Window Frame",
                 description: "Remove the native window frame for a cleaner look. You can still move the window by dragging the title bar area.",
