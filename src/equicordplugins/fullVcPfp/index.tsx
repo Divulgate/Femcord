@@ -6,11 +6,11 @@
 
 import { definePluginSettings } from "@api/Settings";
 import { disableStyle, enableStyle } from "@api/Styles";
-import { EquicordDevs } from "@utils/constants";
+import { EquicordDevs, FemcordDevs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
 import { ChannelRTCStore, ChannelStore, GuildMemberStore, IconUtils, UserStore, VoiceStateStore } from "@webpack/common";
 
-import style from "./style.css?managed";
+import managedStyle from "./style.css?managed";
 
 const settings = definePluginSettings({
     useServerProfileAvatars: {
@@ -23,8 +23,10 @@ const settings = definePluginSettings({
 export default definePlugin({
     name: "FullVCPFP",
     description: "Makes avatars take up the entire vc tile",
-    authors: [EquicordDevs.mochienya],
+    authors: [EquicordDevs.mochienya, FemcordDevs.Blue],
+    isModifiedFemcord: true,
     settings,
+    managedStyle,
     patches: [
         {
             find: "\"data-selenium-video-tile\":",
@@ -68,12 +70,5 @@ export default definePlugin({
             canAnimate,
             size: 1024
         });
-    },
-
-    start() {
-        enableStyle(style);
-    },
-    stop() {
-        disableStyle(style);
     },
 });
