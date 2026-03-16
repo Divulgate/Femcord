@@ -5,16 +5,17 @@
  */
 
 import { disableStyle, enableStyle } from "@api/Styles";
-import { EquicordDevs } from "@utils/constants";
+import { EquicordDevs, FemcordDevs } from "@utils/constants";
 import definePlugin from "@utils/types";
 import { ChannelRTCStore, ChannelStore, UserStore, VoiceStateStore } from "@webpack/common";
 
-import style from "./style.css?managed";
+import managedStyle from "./style.css?managed";
 
 export default definePlugin({
     name: "FullVCPFP",
     description: "Makes avatars take up the entire vc tile",
-    authors: [EquicordDevs.mochienya],
+    authors: [EquicordDevs.mochienya, FemcordDevs.Blue],
+    isModifiedFemcord: true,
     patches: [
         {
             find: "\"data-selenium-video-tile\":",
