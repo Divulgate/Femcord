@@ -459,7 +459,7 @@ export default function ChannelTab(props: ChannelTabsProps & { index: number; })
 
     // check if quests running (questify momentLet)
     const hasActiveQuests = activeQuestIntervals.size > 0;
-    console.log(ThemeStore.theme);
+
     return <div
         className={cl("tab",
             ThemeStore.theme === "light" ? "light-theme" : "dark-theme",
