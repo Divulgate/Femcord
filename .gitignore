@@ -5,6 +5,7 @@ node_modules
 *.exe
 vencord_installer
 equicord_installer
+femcord_installer
 
 .idea
 .DS_Store
