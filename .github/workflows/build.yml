@@ -53,7 +53,8 @@ jobs:
                   mkdir release
                   cp browser/browser.* release
                   cp Femcord.user.{js,js.LEGAL.txt} release
-                  # copy the plugin data jsons, the extension zips and the desktop/vesktop asars
+
+                  # copy the plugin data jsons, the extension zips and the desktop/equibop asars
                   cp *.{json,zip,asar} release
                   # legacy un-asared files
                   cp desktop/* release
