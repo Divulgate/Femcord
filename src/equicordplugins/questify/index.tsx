@@ -282,6 +282,14 @@ function QuestTileContextMenu(children: React.ReactNode[], props: { quest: any; 
                             clearInterval(interval.progressTimeout);
                             clearTimeout(interval.rerenderTimeout);
                             activeQuestIntervals.delete(props.quest.id);
+
+                            if (interval.type === "play") {
+                                void reportPlayGameQuestProgress(refreshQuest(props.quest), true, QuestifyLogger, {
+                                    attempts: 3,
+                                    delay: 2500,
+                                });
+                            }
+
                             resetQuestsToResume(props.quest);
                             rerenderQuests();
                         }
@@ -820,9 +828,18 @@ async function startPlayGameProgressTracking(quest: Quest, target: { raw: number
         }
     }
 
-    function handleQuestComplete(): void {
+    async function sendTerminalHeartbeat(): Promise<void> {
+        await reportPlayGameQuestProgress(refreshQuest(quest), true, QuestifyLogger, {
+            attempts: 3,
+            delay: 2500,
+        });
+    }
+
+    async function handleQuestComplete(): Promise<void> {
         clearTrackingTimers();
         activeQuestIntervals.delete(quest.id);
+
+        await sendTerminalHeartbeat();
         QuestifyLogger.info(`[${getFormattedNow()}] Quest ${questName} completed.`);
 
         if (settings.store.notifyOnQuestComplete) {
@@ -855,7 +872,7 @@ async function startPlayGameProgressTracking(quest: Quest, target: { raw: number
             }
 
             if (result.completed || result.progress >= questTarget) {
-                handleQuestComplete();
+                await handleQuestComplete();
                 return;
             }
 
@@ -899,7 +916,7 @@ async function startPlayGameProgressTracking(quest: Quest, target: { raw: number
     }
 
     if (initial.completed || initial.progress >= questTarget) {
-        handleQuestComplete();
+        await handleQuestComplete();
         return;
     }
 
@@ -1343,6 +1360,7 @@ migratePluginToSettings(true, "Questify", "QuestCompleter", "completeVideoQuests
 export default definePlugin({
     name: "Questify",
     description: "Enhance your Quest experience with a suite of features, or disable them entirely if they're not your thing.",
+    tags: ["Appearance", "Customisation", "Privacy", "Utility"],
     authors: [EquicordDevs.Etorix],
     dependencies: ["AudioPlayerAPI", "ServerListAPI"],
     startAt: StartAt.Init, // Needed in order to beat Read All Messages to inserting above the server list.
@@ -1381,14 +1399,6 @@ export default definePlugin({
 
     patches: [
         {
-            // Hides the notice in the gift inventory that Quests have been relocated to the Discovery tab.
-            find: "quests-wumpus-hikes-mountain-transparent-background",
-            replacement: {
-                match: /return(?=\(0,\i.\i\)\("div",{className:)/,
-                replace: "return $self.shouldHideGiftInventoryRelocationNotice()?null:"
-            }
-        },
-        {
             // Hides Quests tab in the Discovery page.
             find: "GLOBAL_DISCOVERY_SIDEBAR},",
             replacement: [
@@ -1410,16 +1420,20 @@ export default definePlugin({
         },
         {
             // Hides the sponsored banner on the Quests page.
-            find: "{isInDiscoverQuestHomeTab:",
+            find: "resetSortingFiltering(),requestAnimationFrame",
             group: true,
             replacement: [
                 {
-                    match: /(?<=scrollToQuest\(\i\)\}\)\},\[\]\);)/,
+                    match: /(?=let{topLevelRoute)/,
                     replace: "const shouldHideSponsoredQuestBanner=$self.shouldHideSponsoredQuestBanner();"
                 },
                 {
-                    match: /(?<=return null;if\(\i)(\).{0,30}?null!=\i)/,
-                    replace: "&&!shouldHideSponsoredQuestBanner$1&&!shouldHideSponsoredQuestBanner"
+                    match: /(?<=\{onAssetLoad:\i,onQuestCtaClick:\i)(?=\}\),)/,
+                    replace: ",shouldHideSponsoredQuestBanner"
+                },
+                {
+                    match: /(?<=(\i),isLoading:(\i)}=\(0,\i.\i\)\(\);)/,
+                    replace: "if(arguments[0].shouldHideSponsoredQuestBanner){$1=null;$2=false;};"
                 }
             ]
         },
@@ -1430,7 +1444,7 @@ export default definePlugin({
             group: true,
             replacement: [
                 {
-                    match: /(?<=\i\)&&"xs"===\i;)/,
+                    match: /(?<=null&&"xs"===\i;)/,
                     replace: "const shouldHideMembersListActivelyPlayingIcon=$self.shouldHideMembersListActivelyPlayingIcon();"
                 },
                 {
@@ -1660,8 +1674,8 @@ export default definePlugin({
             // Adds the "Questify" sort option to the sort enum.
             find: "SUGGESTED=\"suggested\",",
             replacement: {
-                match: /return ((\i).SUGGESTED="suggested",)/,
-                replace: "return $2.QUESTIFY=\"questify\",$1"
+                match: /(\(\((\i)=\{\}\))(.SUGGESTED="suggested",)/,
+                replace: "$1.QUESTIFY=\"questify\",$2$3"
             }
         },
         {
@@ -1680,8 +1694,12 @@ export default definePlugin({
                     // Run Questify's sort function every time due to hook requirements but return
                     // early if not applicable. If the sort method is set to "Questify", replace the
                     // Quests with the sorted ones. Also, setup a trigger to rerender the memo.
-                    match: /(return \i.useMemo\(\(\)=>{)(?=if\(0===(\i).length\))/,
-                    replace: "const questRerenderTrigger=$self.useQuestRerender();const questifySorted=$self.sortQuests($2,arguments[1].sortMethod!==\"questify\");$1if(arguments[1].sortMethod===\"questify\"){$2=questifySorted;};"
+                    match: /(?<=quests:(\i).{0,150}"use_filtered_quests".{0,25}\i\.id,\i\]\)\)),/,
+                    replace: ";const questRerenderTrigger=$self.useQuestRerender();const questifySorted=$self.sortQuests($1,arguments[1].sortMethod!==\"questify\");let "
+                },
+                {
+                    match: /(?=if\(0===(\i).length\).{0,100}\.sortMethod&&\i\.current)/,
+                    replace: "if(arguments[1].sortMethod===\"questify\"){$1=questifySorted;};"
                 },
                 {
                     // Account for Quest status changes.
@@ -1690,7 +1708,7 @@ export default definePlugin({
                 },
                 {
                     // If we already applied Questify's sort, skip further sorting.
-                    match: /(?<=sortMethod:(\i).{0,115}?return )((\i).sort)/,
+                    match: /(?<=\{sortMethod:(\i).*?return )((\i).sort)/,
                     replace: "$1===\"questify\"?$3:$2"
                 },
                 {
@@ -1810,7 +1828,7 @@ export default definePlugin({
                 },
                 {
                     match: /(?<="primary",onClick:)(\i)/,
-                    replace: "()=>{!$self.processQuestForAutoComplete(arguments[0].quest,true)&&$1}"
+                    replace: "()=>{!$self.processQuestForAutoComplete(arguments[0].quest,true)&&$1()}"
                 }
             ]
         },
@@ -1825,7 +1843,7 @@ export default definePlugin({
         {
             // Sets intervals to progress Play Game Quests in the background.
             // Triggers if a Quest has already been started but was interrupted, such as by a reload.
-            find: "WATCH_VIDEO,skipEnrollmentCheck:!0})",
+            find: "),handleOpenExternalLink:",
             group: true,
             replacement: [
                 {
@@ -1988,9 +2006,19 @@ export default definePlugin({
         }
 
         activeQuestIntervals.forEach((intervalData, questId) => {
+            const quest = QuestsStore.getQuest(questId);
+
+            if (intervalData.type === "play" && quest) {
+                void reportPlayGameQuestProgress(refreshQuest(quest), true, QuestifyLogger, {
+                    attempts: 3,
+                    delay: 2500,
+                });
+            }
+
             clearInterval(intervalData.progressTimeout);
             clearTimeout(intervalData.rerenderTimeout);
-            activeQuestIntervals.delete(questId);
         });
+
+        activeQuestIntervals.clear();
     }
 });

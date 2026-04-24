@@ -17,6 +17,7 @@ export default definePlugin({
     isModifiedFemcord: true, // yes i take credits for a logger
     name: "RichMagnetLinks",
     description: "Renders magnet links like message links",
+    tags: ["Appearance", "Chat"],
     patches: [
         {
             find: "AUTO_MODERATION_SYSTEM_MESSAGE_RULES:",

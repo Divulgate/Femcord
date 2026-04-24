@@ -13,6 +13,7 @@ import managedStyle from "./style.css?managed";
 export default definePlugin({
     name: "FullVCPFP",
     description: "Makes avatars take up the entire vc tile",
+    tags: ["Appearance", "Voice"],
     authors: [EquicordDevs.mochienya, FemcordDevs.Blue],
     isModifiedFemcord: true,
     managedStyle,
