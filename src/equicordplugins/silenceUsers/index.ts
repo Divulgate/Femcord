@@ -50,7 +50,7 @@ function interceptor(event: any) {
 
             return false;
         }
-    } catch { }
+    } catch (e) { new (require("@utils/Logger").Logger)("SilenceUsers").error("Interceptor error", e); }
 }
 
 export default definePlugin({
