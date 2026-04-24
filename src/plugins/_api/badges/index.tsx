@@ -62,6 +62,7 @@ const EquicordContributorBadge: ProfileBadge = {
 };
 
 const FemcordContributorBadge: ProfileBadge = {
+    id: "femcord_contributor_badge",
     description: "Femcord Contributor",
     iconSrc: FEMCORD_CONTRIBUTOR_BADGE,
     position: BadgePosition.START,
