@@ -20,7 +20,7 @@ import "./styles.css";
 
 import { ApplicationCommandInputType, ApplicationCommandOptionType, findOption, registerCommand, sendBotMessage } from "@api/Commands";
 import { migratePluginSettings } from "@api/Settings";
-import { Devs } from "@utils/constants";
+import { Devs, FemcordDevs } from "@utils/constants";
 import { sendMessage } from "@utils/discord";
 import definePlugin from "@utils/types";
 import { FluxDispatcher, MessageActions, PendingReplyStore } from "@webpack/common";
@@ -38,7 +38,7 @@ export function parseTagArguments(message: string) {
         const [name, defaultValue] = value.split("=").map(s => s.trim());
 
         if (!name) continue;
-        if (args.some(arg => arg.name === name)) continue;
+        if (args.some(arg => arg.name === name.toLowerCase())) continue;
 
         args.push({ name: name.toLowerCase(), defaultValue: defaultValue ?? null });
     }
@@ -74,7 +74,7 @@ export function registerTagCommand(tag: Tag) {
             const response = tag.message
                 .replace(ArgumentRegex, (fullMatch, value: string) => {
                     const [argName, defaultValue] = value.split("=").map(s => s.trim());
-                    return findOption(args, argName, null) ?? defaultValue ?? fullMatch;
+                    return findOption(args, argName.toLowerCase(), null) ?? defaultValue ?? fullMatch;
                 })
                 .replaceAll("\\n", "\n");
 
@@ -92,9 +92,10 @@ export default definePlugin({
     description: "Allows you to create custom slash commands / tags",
     dependencies: ["CommandsAPI"],
     searchTerms: ["MessageTags"],
-    authors: [Devs.Ven, Devs.Luna,],
+    authors: [Devs.Ven, Devs.Luna, FemcordDevs.Blue],
     tags: ["Commands", "Customisation", "Utility"],
     settings,
+    isModifiedFemcord: true,
 
     async start() {
         const tags = getTags();

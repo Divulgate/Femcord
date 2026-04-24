@@ -10,7 +10,7 @@ import { addMessagePreSendListener, removeMessagePreSendListener } from "@api/Me
 import { isPluginEnabled } from "@api/PluginManager";
 import { definePluginSettings, migratePluginToSettings, Settings } from "@api/Settings";
 import customRPC from "@plugins/customRPC";
-import { Devs, EquicordDevs, GUILD_ID, SUPPORT_CHANNEL_ID, SUPPORT_CHANNEL_IDS, VC_SUPPORT_CHANNEL_IDS } from "@utils/constants";
+import { Devs, EquicordDevs, FemcordDevs, GUILD_ID, SUPPORT_CHANNEL_ID, SUPPORT_CHANNEL_IDS, VC_SUPPORT_CHANNEL_IDS } from "@utils/constants";
 import { isAnyPluginDev } from "@utils/misc";
 import definePlugin, { OptionType } from "@utils/types";
 import { StandingState } from "@vencord/discord-types/enums";
@@ -150,9 +150,11 @@ export default definePlugin({
         EquicordDevs.mart,
         EquicordDevs.omaw,
         Devs.Samwich,
-        Devs.AutumnVN
+        Devs.AutumnVN,
+        FemcordDevs.Blue
     ],
     required: true,
+    isModifiedFemcord: true,
     settings,
     headerBarButton: {
         icon: ShieldIcon,
@@ -367,9 +369,7 @@ export default definePlugin({
         }
     },
     stop() {
-        if (settings.store.noBulletPoints) {
-            removeMessagePreSendListener(listener);
-        }
+        removeMessagePreSendListener(listener);
     }
 });
 
