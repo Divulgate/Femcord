@@ -5,6 +5,7 @@ node_modules
 *.exe
 vencord_installer
 equicord_installer
+femcord_installer
 
 .idea
 .DS_Store
@@ -22,7 +23,6 @@ lerna-debug.log*
 *.tsbuildinfo
 
 .modules/
-src/userplugins
 
 ExtensionCache/
 /settings
