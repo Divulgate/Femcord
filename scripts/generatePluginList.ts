@@ -35,11 +35,11 @@ import { getEntryPoint, isPluginFile, parseDevs, parseEquicordDevs, parseFemcord
     if (femcordFlag) {
         dirs = ["src/femcordplugins"];
     } else if (equicordFlag) {
-        dirs = ["src/equicordplugins"];
+        dirs = ["src/equicordplugins/_core", "src/equicordplugins"];
     } else if (vencordFlag) {
         dirs = ["src/plugins", "src/plugins/_core"];
     } else {
-        dirs = ["src/plugins", "src/plugins/_core", "src/equicordplugins", "src/femcordplugins"];
+        dirs = ["src/plugins", "src/plugins/_core", "src/equicordplugins/_core", "src/equicordplugins", "src/femcordplugins"];
     }
 
     const outputPath = args.find(a => !a.startsWith("--")) ?? null;
