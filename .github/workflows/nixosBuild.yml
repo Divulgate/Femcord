@@ -70,7 +70,6 @@ jobs:
               run: echo "date=$(date +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
 
             - name: Upload Femcord Stable
-              if: ${{ vars.ACT == 'false' }}
               run: |
                   TAG="${{ steps.date.outputs.date }}"
                   REPO="${GITHUB_REPOSITORY}"
