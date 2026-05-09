@@ -38,7 +38,14 @@ function getFilename() {
         case "win32":
             return "AxolotlCli.exe";
         case "darwin":
-            return "Axolotl.MacOS.zip";
+            switch (process.arch) {
+                case "x64":
+                    return "Axolotl-darwin-x64.zip";
+                case "arm64":
+                    return "Axolotl-darwin-arm64.zip";
+                default:
+                    throw new Error("Unsupported macOS architecture: " + process.arch);
+            }
         case "linux":
             return "AxolotlCli-linux";
         default:

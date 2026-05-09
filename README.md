@@ -20,7 +20,8 @@ Windows
 
 MacOS
 
-- [GUI](https://github.com/pastelrbx/Axolotl/releases/latest/download/Axolotl.MacOS.zip)
+- [X64 GUI](https://github.com/pastelrbx/Axolotl/releases/latest/download/Axolotl-darwin-x64.zip)
+- [ARM64 GUI](https://github.com/pastelrbx/Axolotl/releases/latest/download/Axolotl-darwin-arm64.zip)
 
 Linux
 
