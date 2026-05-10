@@ -50,7 +50,7 @@ export default definePlugin({
     tags: ["Appearance", "Customisation", "Organisation", "Servers"],
     authors: [Devs.TheSun, Devs.TheKodeToad, EquicordDevs.keifufu, Devs.Nickyux, EquicordDevs.DiabeloDEV, EquicordDevs.justjxke, FemcordDevs.Blue, EquicordDevs.keircn], // yes i take credit for removing console.logs lol
     isModifiedFemcord: true, // yes i take credit for removing console.logs lol
-    dependencies: ["ContextMenuAPI"],
+    dependencies: ["ContextMenuAPI", "ConcatenatedModules"],
     contextMenus: {
         "channel-mention-context": contextMenuPatch,
         "channel-context": contextMenuPatch,
