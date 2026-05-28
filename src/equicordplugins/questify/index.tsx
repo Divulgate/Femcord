@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import "./styles.css";
-
 import { playAudio } from "@api/AudioPlayer";
 import { addServerListElement, removeServerListElement, ServerListRenderPosition } from "@api/ServerList";
 import { PlainSettings, Settings } from "@api/Settings";
@@ -26,6 +24,7 @@ import { rerenderQuests, useQuestRerender } from "./settings/rerender";
 import { disposeRestartTracking, initializeRestartTracking, promptToRestartIfDirty, setRestartDirty } from "./settings/restartTracking";
 import { settings } from "./settings/store";
 import { getSettingsModalOpen, initialQuestDataFetched, setInitialQuestDataFetched, setSettingsModalOpen } from "./state";
+import managedStyle from "./styles.css?managed";
 import { canAutoCompleteQuest, getActiveAutoCompletes, getQuestAutoCompleteProgress, getQuestButtonProps, getQuestPanelSubtitleText, hasEnabledAutoCompleteQuestTypes, processQuestForAutoComplete, resumeInterruptedAutoCompletes, setHeartbeatStackTracePatchSucceeded, setVideoProgressStackTracePatchSucceeded, stopAllAutoCompletes, stopAutoCompletesForRunningGames, stopQuestAutoComplete } from "./utils/completion";
 import { canOpenDevToolsWindow, fetchAndDispatchQuests, openDevToolsWindow, snakeToCamel } from "./utils/fetching";
 import { normalizeQuestName } from "./utils/filtering";
@@ -103,6 +102,7 @@ export default definePlugin({
     authors: [EquicordDevs.Etorix],
     dependencies: ["AudioPlayerAPI", "ServerListAPI"],
     startAt: StartAt.Init, // Needed in order to beat Read All Messages to inserting above the server list.
+    managedStyle,
     settings,
 
     canOpenDevToolsWindow,
@@ -211,10 +211,9 @@ export default definePlugin({
             find: "QUEST_HOME)},[]),",
             predicate: () => !getQuestifySettings().disableQuestsEverything && getQuestifySettings().disableSponsoredBanner,
             replacement: {
-                match: /(?<=(\i),isLoading:(\i)}=\(0,\i.\i\)\(\i\);)/,
-                replace: "if(true){$1=null;$2=false;};"
+                match: /(?<=,{questHomeHero:(\i),isLoading:(\i)}=.{0,300}?ORBS_BALANCE_MENU}\)},\[\]\);)/,
+                replace: "$1=null;$2=false;"
             }
-
         },
         {
             // Hides the Quest & Orbs badges on user profiles.
@@ -245,12 +244,12 @@ export default definePlugin({
             replacement: [
                 {
                     // QUESTS_FETCH_CURRENT_QUESTS_BEGIN
-                    match: /(?=if\(!\i.\i.isFetchingCurrentQuests\))/,
-                    replace: "return;"
+                    match: /(?<=if\(\i.\i.isFetchingCurrentQuests)/,
+                    replace: "||true"
                 },
                 {
                     // QUESTS_FETCH_QUEST_TO_DELIVER_BEGIN
-                    match: /(?=let.{0,150}QUESTS_FETCH_QUEST_TO_DELIVER_BEGIN)/,
+                    match: /(?=let \i=Date.now\(\);\i.recordQuestRequestAttempt.{0,50}QUESTS_FETCH_QUEST_TO_DELIVER_BEGIN)/,
                     replace: "return;"
                 }
             ]
@@ -260,7 +259,7 @@ export default definePlugin({
             find: ",{progressTextAnimation:",
             predicate: () => !getQuestifySettings().disableQuestsEverything,
             replacement: {
-                match: /(let{percentComplete:.{0,115}?children:\i}=)(\i)/,
+                match: /(let{percentComplete:.{0,115}?children:\i,useAltStyle:\i=!1}=)(\i)/,
                 replace: "const questifyProgress=$self.getQuestPanelPercentComplete({...$2,quest:$2.children?.props?.quest});$1Object.assign({},$2,questifyProgress??{})"
             }
         },
@@ -295,11 +294,11 @@ export default definePlugin({
             predicate: () => !getQuestifySettings().disableQuestsEverything && hasEnabledAutoCompleteQuestTypes(),
             replacement: [
                 {
-                    match: /(async function \i\(\i,\i\)\{await \i\.\i\.post\(\{url:\i\.\i\.QUESTS_VIDEO_PROGRESS.{0,200}?stack_trace:)Error\(\)\.stack\?\?""/,
+                    match: /(async function \i\(\i,\i\)\{await \i\.\i\.post\(\{url:\i\.\i\.QUESTS_VIDEO_PROGRESS.{0,250}?stack_trace:)Error\(\)\.stack\?\?""/,
                     replace: '$self.setVideoProgressStackTracePatchSucceeded();$1""'
                 },
                 {
-                    match: /(async function \i\(\i\)\{let\{questId:\i,streamKey:\i.{0,350}?stack_trace:)Error\(\)\.stack\?\?""/,
+                    match: /(async function \i\(\i\)\{let\{questId:\i,streamKey:\i.{0,450}?stack_trace:)Error\(\)\.stack\?\?""/,
                     replace: '$self.setHeartbeatStackTracePatchSucceeded();$1""'
                 }
             ]
@@ -343,7 +342,7 @@ export default definePlugin({
                 },
                 {
                     // Overwrite button props for ENROLLED/INCOMPLETE Quests.
-                    match: /(?<=let{quest:\i,taskType:\i,surface:\i.{0,150}?size:\i}=\i;return)(.{0,300}?taskType:\i,size:\i,analyticsCtxQuestContent:\i,analyticsCtxSourceQuestContent:\i}\))/,
+                    match: /(?<=let{quest:\i,taskType:\i,surface:\i.{0,150}?size:\i}=\i;return)(.{0,300}?,size:\i,surface:\i,analyticsCtxQuestContent:\i,analyticsCtxSourceQuestContent:\i}\))/,
                     replace: " $self.enrolledIncompleteButton(arguments[0])||($1)"
                 }
             ]
@@ -354,7 +353,7 @@ export default definePlugin({
             predicate: () => !getQuestifySettings().disableQuestsEverything && hasEnabledAutoCompleteQuestTypes(),
             replacement: {
                 match: /(?<=SELECT&&!\i&&!\i,(\i)=null;)(return )(\i\?\i=\(0,\i.\i\)\(\i,{quest:(\i))/,
-                replace: "const questifyButton=$self.enrolledIncompleteButton({quest:$4});$2questifyButton?$1=questifyButton:$3"
+                replace: "const questifyButton=$self.enrolledIncompleteButton({quest:$4,size:\"sm\"});$2questifyButton?$1=questifyButton:$3"
             }
         },
         {
@@ -367,10 +366,15 @@ export default definePlugin({
             }
         },
         {
-            find: ".rowIndex,trackGuildAndChannelMetadata",
+            find: "return`quest-tile-",
             group: true,
             predicate: () => !getQuestifySettings().disableQuestsEverything,
             replacement: [
+                {
+                    // Alias the selected platform dropdown state before exposing CTA buttons.
+                    match: /(?<=var \i;)(?=let \i,\i,{quest:\i,questContent:)/,
+                    replace: "let questifySelectedPlatformDropdownVisible;"
+                },
                 {
                     // Prevent the platform selector if the Quest is auto-completable.
                     match: /(?<=ACCEPTED,\i=)(?=\i&&)/,
@@ -379,42 +383,39 @@ export default definePlugin({
                 {
                     // Prevent the platform selector if the Quest is auto-completable.
                     match: /(?<=SELECT,\i=)(?=\i&&)/,
-                    replace: "!$self.canAutoCompleteQuest(arguments[0].quest)&&"
+                    replace: "questifySelectedPlatformDropdownVisible=!$self.canAutoCompleteQuest(arguments[0].quest)&&"
                 },
-                // If this group becomes unruly due to Discord refactoring and is unfixable,
-                // the 2nd, 3rd, and 4th can be commented out in favor of just the 1st at the expense
-                // of not seeing CTA buttons on completed but unclaimed Quests. Also, questifyCanAutoComplete
-                // would need to be replaced as the 2nd patch defines it.
                 {
-                    // Always expose the CTA button when available instead of only for videos and activities.
+                    // Always expose the CTA button when available instead of only for videos and activities,
+                    // unless the selected platform dropdown is already taking the secondary slot.
                     match: /(?<=wrap:!1,children:\[)(\i&&[^?]+)/,
-                    replace: "((!!arguments[0].quest.config.ctaConfig&&questifyCanAutoComplete)||($1))"
+                    replace: "((!!arguments[0].quest.config.ctaConfig&&!questifySelectedPlatformDropdownVisible)||($1))"
                 },
                 {
                     // Let completed/claimed expired Quests with CTAs use the CTA-aware completed branch.
                     match: /(return\()(?=\i.enabled&&\i===\i\.\i\.EXPIRED_CLAIMABLE&&\i\.\i\.has\(\i\))/,
-                    replace: "const questifyCanAutoComplete=$self.canAutoCompleteQuest(arguments[0].quest);$1(questifyCanAutoComplete?!arguments[0].quest.config.ctaConfig:true)&&"
+                    replace: "$1!arguments[0].quest.config.ctaConfig&&"
                 },
                 {
                     // Let completed/claimed expired Quests with CTAs use the CTA-aware completed branch.
                     match: /(?<=\):\i\?\i=)(\i)(?=\?\(0,\i\.jsx\)\(\i,\{quest:\i,sourceQuestContent:\i,onClick:\i,text:\i\}\):)/,
-                    replace: "((arguments[0].quest.config.ctaConfig&&questifyCanAutoComplete)||($1))"
+                    replace: "(arguments[0].quest.config.ctaConfig||$1)"
                 },
                 {
                     // Force the CTA-aware complete branch.
                     match: /(?<=analyticsCtxQuestContentRowIndex:\i}\)}\):\i&&\i)(.{0,200}?fullWidth:!0}\)}\):)(\i.enabled.{0,50}?CLAIMED\)&&\i.\i.has\(\i\))(\?\i=)(\i)/,
-                    replace: "&&!questifyCanAutoComplete$1((questifyCanAutoComplete&&arguments[0].quest.config.ctaConfig&&arguments[0].quest.userStatus?.completedAt)||($2))$3(questifyCanAutoComplete||$4)"
+                    replace: "&&false$1((arguments[0].quest.config.ctaConfig&&arguments[0].quest.userStatus?.completedAt)||($2))$3(true||$4)"
                 }
             ]
         },
         {
-            find: ".rowIndex,trackGuildAndChannelMetadata",
+            find: "return`quest-tile-",
             group: true,
             predicate: () => !getQuestifySettings().disableQuestsEverything,
             replacement: [
                 {
                     // Subscribes each Quest tile to Questify's manual rerender trigger.
-                    match: /(?=return\(0,\i\.\i\)\("div",\{id:)/,
+                    match: /(?=return\(0,\i\.\i\)\("article",\{id:)/,
                     replace: "void $self.useQuestRerender();"
                 },
                 {
@@ -474,7 +475,7 @@ export default definePlugin({
                 },
                 {
                     // Bypasses Discord's memo cache while the Questify sort is active.
-                    match: /(if\(\i\.current\.length>0&&\i\.current===\i\.length&&\i\.current===\i\.sortMethod&&\i\.current===\i\.filters&&\i\.current===\i)(\)return \i\.current;)/,
+                    match: /(if\(\i\.current\.length>0&&\i\.current===\i\.length&&\i\.current===\i\.sortMethod&&\i\.current===\i\.filters)(\)return \i\.current;)/,
                     replace: "$1&&arguments[1]?.sortMethod!==\"questify\"$2"
                 },
                 {
@@ -484,7 +485,7 @@ export default definePlugin({
                 },
                 {
                     // Recomputes Discord's Quest list memo when Questify settings or rerenders change.
-                    match: /(?<=\.id\);return \i\.current=\i,\i\.current=\i\.sortMethod,\i\.current=\i\.filters,\i\.current=\i\.length,\i\.current=\i,\i\},\[)(\i,\i,\i)(?=\]\)\))/,
+                    match: /(?<=\.id\);return \i\.current=\i,\i\.current=\i\.sortMethod,\i\.current=\i\.filters,\i\.current=\i\.length,\i\},\[)(\i,\i)(?=\]\)\))/,
                     replace: "$1,questRerenderTrigger,questifySorted"
                 }
             ]

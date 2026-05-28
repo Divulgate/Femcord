@@ -7,7 +7,7 @@
 import "./style.css";
 
 import { isPluginEnabled } from "@api/PluginManager";
-import { definePluginSettings, migrateOldSettingToNewPlugin, migratePluginSetting, migratePluginSettings } from "@api/Settings";
+import { definePluginSettings, migratePluginSetting } from "@api/Settings";
 import { Divider } from "@components/Divider";
 import { HeadingSecondary } from "@components/Heading";
 import { Notice } from "@components/Notice";
@@ -17,21 +17,8 @@ import { Devs, EquicordDevs } from "@utils/index";
 import definePlugin, { OptionType } from "@utils/types";
 import { Alerts } from "@webpack/common";
 
-migratePluginSettings("Declutter", "BetterUserArea", "Anammox");
-migrateOldSettingToNewPlugin("Declutter", "removeClanTag", "GuildTagSettings", "hideTags");
-
-const migrationsAnammox = [
-    ["dms", "removeShopAboveDM"],
-    ["quests", "removeQuestsAboveDM"],
-    ["serverBoost", "removeServerBoostInfo"],
-    ["billing", "removeBillingSettings"],
-    ["gift", "removeGiftButton"],
-    ["emojiList", "removeUnavailableEmojiPicker"],
-];
-
-for (const [oldKey, newKey] of migrationsAnammox) {
-    migratePluginSetting("Declutter", newKey, oldKey);
-}
+migratePluginSetting("Declutter", "removeShopAboveDms", "removeShopAboveDM");
+migratePluginSetting("Declutter", "removeQuestsAboveDms", "removeQuestsAboveDM");
 
 const cl = classNameFactory("vc-declutter-");
 
@@ -83,13 +70,13 @@ export const settings = definePluginSettings({
         type: OptionType.COMPONENT,
         component: () => SectionSeparator("Above Friends/DMs List"),
     },
-    removeShopAboveDM: {
+    removeShopAboveDms: {
         type: OptionType.BOOLEAN,
         description: "Remove shops above DMs list.",
         default: false,
         restartNeeded: true,
     },
-    removeQuestsAboveDM: {
+    removeQuestsAboveDms: {
         type: OptionType.BOOLEAN,
         description: "Remove quests above DMs list.",
         default: false,
@@ -160,7 +147,6 @@ export default definePlugin({
                 title: "Declutter",
                 body: "Avatar decoration removal has been disabled to prevent conflicts with Decor plugin.",
                 confirmText: "OK",
-                // @ts-expect-error not typed
                 confirmVariant: "critical-primary"
             });
         }
@@ -184,6 +170,27 @@ export default definePlugin({
                 replace: "null"
             },
             predicate: () => settings.store.removeAvatarDecoration && !isPluginEnabled(decor.name),
+        },
+        // User Area
+        {
+            find: ".DISPLAY_NAME_STYLES_COACHMARK)",
+            replacement: [
+                {
+                    match: /((\i)=\i\?\.avatarDecoration,\i=)\(0,\i\.\i\)\(\2\)/,
+                    replace: "$1null",
+                    predicate: () => settings.store.removeAvatarDecoration && !isPluginEnabled(decor.name),
+                },
+                {
+                    match: /(iconForeground:null!=\i\?\i\.\i:void 0,nameplate:)\i/g,
+                    replace: "$1null",
+                    predicate: () => settings.store.removeNameplate,
+                },
+                {
+                    match: /let\{ref:\i,speaking:\i,voiceDb:/,
+                    replace: "arguments[0].nameplate=null;$&",
+                    predicate: () => settings.store.removeNameplate,
+                }
+            ],
         },
         {
             // Nameplate
@@ -285,18 +292,18 @@ export default definePlugin({
                 {
                     match: /"nitro-tab-group"\)/,
                     replace: "$&&&undefined",
-                    predicate: () => settings.store.removeShopAboveDM,
+                    predicate: () => settings.store.removeShopAboveDms,
                 },
                 {
-                    match: /"discord-shop"\)/,
+                    match: /NAVIGATION_LINK\}\}\},"discord-shop"\)/,
                     replace: "$&&&undefined",
-                    predicate: () => settings.store.removeShopAboveDM
+                    predicate: () => settings.store.removeShopAboveDms
 
                 },
                 {
-                    match: /"quests"\)/,
+                    match: /\.QUEST_HOME\},"quests"\)/,
                     replace: "$&&&undefined",
-                    predicate: () => settings.store.removeQuestsAboveDM
+                    predicate: () => settings.store.removeQuestsAboveDms
                 },
             ],
         },
@@ -313,7 +320,7 @@ export default definePlugin({
                     replace: "/*$&*/",
                 },
             ],
-            predicate: () => settings.store.removeShopAboveDM,
+            predicate: () => settings.store.removeShopAboveDms,
         },
         {
             // Channel list server boost progress bar
@@ -328,7 +335,7 @@ export default definePlugin({
             // Billing settings
             find: ".BILLING_SECTION,",
             replacement: {
-                match: /(?<=buildLayout:\(\)=>)\[.+?\]/,
+                match: /(?<=#{intl::BILLING}\),buildLayout:\(\)=>)\[.+?\]/,
                 replace: "[]",
             },
             predicate: () => settings.store.removeBillingSettings,

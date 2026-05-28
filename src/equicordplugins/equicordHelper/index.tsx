@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import "./standingButton.css";
+
 import { ApplicationCommandInputType, sendBotMessage } from "@api/Commands";
 import { HeaderBarButton } from "@api/HeaderBar";
 import { addMessagePreSendListener, removeMessagePreSendListener } from "@api/MessageEvents";
@@ -16,7 +18,7 @@ import { isAnyPluginDev } from "@utils/misc";
 import definePlugin, { OptionType } from "@utils/types";
 import { StandingState } from "@vencord/discord-types/enums";
 import { findByCodeLazy, findStoreLazy } from "@webpack";
-import { Alerts, ApplicationCommandIndexStore, NavigationRouter, React, SettingsRouter, UserStore, useStateFromStores } from "@webpack/common";
+import { Alerts, ApplicationCommandIndexStore, NavigationRouter, React, SettingsRouter, UserGuildSettingsStore, UserStore, useStateFromStores, VoiceStateStore } from "@webpack/common";
 import { ComponentType } from "react";
 
 import { PluginButtons } from "./pluginButtons";
@@ -42,7 +44,6 @@ const StandingConfig: Record<number, { label: string; hoverColor: string; Icon: 
 function StandingButton() {
     const standing = useStateFromStores([SafetyHubStore], () => SafetyHubStore.getAccountStanding());
     const isInitialized = useStateFromStores([SafetyHubStore], () => SafetyHubStore.isInitialized());
-    const [hovered, setHovered] = React.useState(false);
 
     React.useEffect(() => {
         if (!isInitialized) fetchSafetyHub().catch(() => { });
@@ -51,14 +52,12 @@ function StandingButton() {
     const config = StandingConfig[standing?.state] ?? StandingConfig[StandingState.ALL_GOOD];
 
     return (
-        <div style={{ display: "contents" }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-            <HeaderBarButton
-                tooltip={config.label}
-                position="bottom"
-                icon={props => <config.Icon {...props} color={hovered ? config.hoverColor : "currentColor"} />}
-                onClick={() => SettingsRouter.openUserSettings("my_account_panel")}
-            />
-        </div>
+        <HeaderBarButton
+            tooltip={config.label}
+            position="bottom"
+            icon={props => <config.Icon {...props} className="vc-eqh-standing" style={{ "--vc-eqh-standing-hover": config.hoverColor } as React.CSSProperties} />}
+            onClick={() => SettingsRouter.openUserSettings("account_standing_panel")}
+        />
     );
 }
 
@@ -130,6 +129,12 @@ const settings = definePluginSettings({
     jsonGateway: {
         type: OptionType.BOOLEAN,
         description: "Forces JSON on gateway reconnect",
+        restartNeeded: true,
+        default: false,
+    },
+    hideVoiceIndicatorForMutedChannels: {
+        type: OptionType.BOOLEAN,
+        description: "Hide voice indicator in server list when only active channels are muted",
         restartNeeded: true,
         default: false,
     }
@@ -265,15 +270,6 @@ export default definePlugin({
         },
         // Removes Modal Animation
         {
-            find: 'backdropFilter:"blur(0px)"',
-            predicate: () => settings.store.noModalAnimation,
-            replacement: {
-                match: /\?0:200/,
-                replace: "?0:0",
-            }
-        },
-        // Removes Modal Animation
-        {
             find: '="ABOVE"',
             predicate: () => settings.store.noModalAnimation,
             replacement: {
@@ -327,6 +323,32 @@ export default definePlugin({
                 }
             ],
             predicate: () => Settings.winNativeTitleBar,
+        },
+        {
+            find: "DirectMessage: getSpringConfigs()",
+            replacement: [
+                {
+                    match: /("data-drop-hovering".{0,100}selected:(?:\i|!0),upperBadge:)(\i)(?=,lowerBadge:\i)/g,
+                    replace: "$1$self.hasUnmutedVoiceChannel(arguments[0]?.guild?.id)?$2:null"
+                },
+                {
+                    match: /return (\i)\.type===\i\.\i\.GUILD_VOICE/,
+                    replace: "$&&&!$self.isChannelMuted($1?.guildId,$1?.id)"
+                },
+                {
+                    match: /\.afkChannelId\?\[\].{0,50}.filter\((\i)=>\i\.type===\i\.\i\.VOICE/,
+                    replace: "$&&&!$self.isChannelMuted($1?.guildId,$1?.channelId)"
+                },
+                {
+                    match: /\.getAllApplicationStreams\(\).filter\((\i)=>\i\.guildId===\i/,
+                    replace: "$&&&!$self.isChannelMuted($1?.guildId,$1?.channelId)"
+                },
+                {
+                    match: /\.getEmbeddedActivitiesForGuild\((\i)\)(?=.flatMap\(\i=>)/,
+                    replace: "$&.filter(e=>!$self.isChannelMuted($1?.guildId,e?.channelId))"
+                }
+            ],
+            predicate: () => settings.store.hideVoiceIndicatorForMutedChannels,
         },
     ],
     renderMessageAccessory(props) {
@@ -384,7 +406,23 @@ export default definePlugin({
         }
     },
     stop() {
-        removeMessagePreSendListener(listener);
+        if (settings.store.noBulletPoints) {
+            removeMessagePreSendListener(listener);
+        }
+    },
+    isChannelMuted(guildId: string, channelId: string) {
+        const currentUserVoiceState = VoiceStateStore.getVoiceStateForUser(UserStore.getCurrentUser()?.id);
+        if (currentUserVoiceState?.channelId === channelId) return false;
+        return UserGuildSettingsStore.isChannelMuted(guildId, channelId);
+    },
+    hasUnmutedVoiceChannel(guildId: string) {
+        const voiceStates = VoiceStateStore.getVoiceStates(guildId);
+        const currentUserVoiceState = VoiceStateStore.getVoiceStateForUser(UserStore.getCurrentUser()?.id);
+
+        return Object.values(voiceStates ?? {}).some(voiceState =>
+            voiceState?.channelId === currentUserVoiceState?.channelId ||
+            !UserGuildSettingsStore.isChannelMuted(guildId, voiceState?.channelId!)
+        );
     }
 });
 

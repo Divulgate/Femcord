@@ -1329,6 +1329,18 @@ export const EquicordDevs = Object.freeze({
         name: "NassCT",
         id: 354996937868705793n
     },
+    yafyx: {
+        name: "kiniyaku",
+        id: 658209494609821699n
+    },
+    dhopcs: {
+        name: "dhopcs",
+        id: 206309860038410240n
+    },
+    qdnx: {
+        name: "qdnx",
+        id: 1374803023506702508n
+    },
 } satisfies Record<string, Dev>);
 
 export const FemcordDevs = Object.freeze({
