@@ -1,4 +1,4 @@
-# Equicord Rules
+# Femcord Rules
 
 ## Philosophy
 
@@ -52,12 +52,12 @@ Does NOT get merged:
    * SPDX-License-Identifier: GPL-3.0-or-later
    */
   ```
-  Header says `Vencord, a Discord client mod` even on new Equicord-only files. Equicord is a Vencord fork, upstream attribution is kept across the whole tree. Don't change it to "Equicord".
+  Header says `Vencord, a Discord client mod` even on new Femcord-only files. Femcord is an Equicord fork, which is a Vencord fork, upstream attribution is kept across the whole tree. Don't change it to "Femcord".
   Older files carry the full GPL preamble. Leave existing headers alone, don't rewrite them.
-- Folder per plugin. `src/plugins/<name>/index.tsx` or `src/equicordplugins/<name>/index.tsx`. Single-file plugins still get a folder.
+- Folder per plugin. `src/plugins/<name>/index.tsx`, `src/equicordplugins/<name>/index.tsx` or `src/equicordplugins/<name>/index.tsx`. Single-file plugins still get a folder.
 - Folder suffixes the build filters on: `.desktop`, `.web`, `.dev`, `.discordDesktop`, `.vesktop`, `.equibop`.
 - `export default definePlugin({ ... })`. Never named.
-- Required fields: `name`, `description`, `authors`. Use `Devs` or `EquicordDevs`, never inline.
+- Required fields: `name`, `description`, `authors`. Use `Devs`, `EquicordDevs`, or `FemcordDevs`, never inline.
 - List `dependencies` for every API plugin used.
 - Lock environment via folder suffix. Per-setting platform gating via `target?: "WEB" | "DESKTOP" | "BOTH"` on the setting def (not the plugin). Code-path gating via build constants.
 - `requiresRestart` defaults true when `patches` exist. Set only to override.
@@ -65,6 +65,7 @@ Does NOT get merged:
 - `settingsAboutComponent?: React.ComponentType` renders above settings UI.
 - `reporterTestable?: ReporterTestable` flags parts the auto-reporter exercises (`Start`, `Patches`, `FluxEvents`, `None`).
 - `isModified?: true` marks an upstream Vencord plugin Equicord modified.
+- `isModifiedFemcord?: true` marks an upstream Vencord or Equicord plugin Femcord modified.
 - Optional: `tags?: PluginTag[]` (closed list in `src/utils/types.ts`), `required` (forced on, hidden toggle), `enabledByDefault` (on at first run, toggleable), `hidden` (off the UI), `searchTerms?: string[]`.
 
 ### Declarative over imperative
