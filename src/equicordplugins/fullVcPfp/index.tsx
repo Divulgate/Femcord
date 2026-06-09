@@ -5,6 +5,7 @@
  */
 
 import { EquicordDevs, FemcordDevs } from "@utils/constants";
+import { getUserAvatarUrl } from "@utils/misc";
 import definePlugin from "@utils/types";
 import { ChannelRTCStore, ChannelStore, UserStore, VoiceStateStore } from "@webpack/common";
 
@@ -38,7 +39,7 @@ export default definePlugin({
 
         const guildId = ChannelStore.getChannel(channelId)?.guild_id;
         const isSpeaking = ChannelRTCStore.getSpeakingParticipants(channelId).some(p => p.user.id === participantUserId && p.speaking);
-        const avatarUrl = user.getAvatarURL(guildId, 1024, isSpeaking);
+        const avatarUrl = getUserAvatarUrl(user, guildId, isSpeaking, 1024);
 
         return {
             "--full-res-avatar": `url(${avatarUrl})`

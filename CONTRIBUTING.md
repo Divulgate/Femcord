@@ -11,13 +11,20 @@ We have development documentation for new contributors, which can be found at <h
 
 Contributions are submitted through pull requests. If you are new to Git or GitHub, we recommend reading [this guide](https://opensource.com/article/19/7/create-pull-request-github).
 
+Before working on a major change, I highly recommend opening a feature request for it, making sure to check "I am willing to work on this myself",
+so we can discuss before you invest time. Alternatively, you can also do so in our Discord server's development
+channels. This saves you a lot of time in case your feature is considered too niche or rejected for any other reason.
+
 ## Writing a Plugin
 
 Developing a plugin is the primary way to contribute.
 
 Before starting your plugin:
 
-- Join the Discord server.
+- Check existing pull requests to see if someone is already working on a similar plugin
+- Familarise yourself with our plugin rules below to ensure your plugin is not banned
+
+- Join our Discord server.
 - Check existing pull requests to avoid duplicate work.
 - Check the [plugin requests tracker](https://discord.com/channels/1173279886065029291/1419347113745059961) to see if your idea already exists or was rejected.
 - If no request exists, open one and clearly state that you want to work on it yourself.
@@ -30,7 +37,8 @@ Before starting your plugin:
 ## Plugin Rules
 
 To keep Femcord stable, secure and maintainable, all plugins must follow these rules:
-1. If possible, create a [user-installable Discord app](https://discord.com/developers/docs/change-log#userinstallable-apps-preview) instead of a plugin.
+
+1. No simple slash-command plugins (e.g. `/cat`). If applicable, create a [user-installable Discord app](https://discord.com/developers/docs/change-log#userinstallable-apps-preview) instead.
 2. No simple text replacement plugins (the built-in TextReplace plugin already covers this).
 3. No raw DOM manipulation — always use proper patches and React.
 4. No plugins that only hide or redesign UI elements (use CSS for that). This rule may be negotiable.
