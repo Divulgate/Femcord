@@ -30,7 +30,7 @@ Linux
 - [AUR](https://aur.archlinux.org/packages?O=0&K=equicord)
 
 ```shell
-sh -c "$(curl -sS https://raw.githubusercontent.com/Divulgate/Femcord/refs/heads/main/misc/install.sh)"
+bash -c "$(curl -sS https://raw.githubusercontent.com/Divulgate/Femcord/refs/heads/main/misc/install.sh)"
 ```
 
 ## Installing Femcord Devbuild
