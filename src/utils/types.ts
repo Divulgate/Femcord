@@ -241,6 +241,11 @@ export interface PluginDef {
      * A Vencord plugin that is modified for extra features in Equicord
      */
     isModified?: boolean;
+
+    /**
+     * A Vencord or Equicord plugin that is modified for extra features in Femcord
+     */
+    isModifiedFemcord?: boolean;
 }
 
 export const enum StartAt {

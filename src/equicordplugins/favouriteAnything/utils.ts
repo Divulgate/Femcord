@@ -153,7 +153,7 @@ async function fetchAttachment(attachment: MessageAttachment): Promise<File> {
 }
 
 export async function sendAttachment(attachment: MessageAttachment, channel: Channel) {
-    const { filename, title, description } = attachment;
+    const { filename, description } = attachment;
     const file = await fetchAttachment(attachment).catch(() =>
         Toasts.show({ message: `Couldn't fetch ${filename}`, id: Toasts.genId(), type: Toasts.Type.FAILURE })
     );
@@ -172,8 +172,8 @@ export async function sendAttachment(attachment: MessageAttachment, channel: Cha
 
     const [upload] = uploads.splice(uploadIdx);
     UploadManager.setUploads({ uploads, channelId: channel.id, draftType: DraftType.ChannelMessage });
-    // Empty titles and descriptions are allowed
-    if (title != null) upload.filename = title;
+    // Empty filenames and descriptions are allowed
+    if (filename != null) upload.filename = filename;
     if (description != null) upload.description = description;
 
     FluxDispatcher.dispatch({ type: "DELETE_PENDING_REPLY", channelId: channel.id });
