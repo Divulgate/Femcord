@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import { Devs, EquicordDevs } from "@utils/constants";
+import { Devs, EquicordDevs, FemcordDevs } from "@utils/constants";
 import { getIntlMessage } from "@utils/discord";
 import definePlugin from "@utils/types";
 import { Embed, MessageAttachment } from "@vencord/discord-types";
@@ -26,7 +26,8 @@ export default definePlugin({
     name: "FavouriteAnything",
     description: "Favourite any image, video, or file attachment",
     tags: ["Chat", "Media"],
-    authors: [Devs.nin0dev, EquicordDevs.davri],
+    authors: [Devs.nin0dev, EquicordDevs.davri, FemcordDevs.Blue],
+    isModifiedFemcord: true,
     searchTerms: ["favorite"],
     managedStyle,
     patches: [
