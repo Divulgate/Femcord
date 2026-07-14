@@ -156,6 +156,7 @@ export default definePlugin({
         EquicordDevs.omaw,
         Devs.Samwich,
         Devs.AutumnVN,
+        EquicordDevs.auggeeo,
         FemcordDevs.Blue
     ],
     required: true,
@@ -351,6 +352,16 @@ export default definePlugin({
             ],
             predicate: () => settings.store.hideVoiceIndicatorForMutedChannels,
         },
+        // Add opening profile functionality to some connections
+        {
+            find: "getPlatformUserUrl:",
+            replacement: [
+                {
+                    match: /name:("(?:Xbox|Epic Games)").{0,180}enabled:!0/g,
+                    replace: "$&,getPlatformUserUrl:e=>$self.getPlatformUrl($1, e)"
+                }
+            ]
+        },
     ],
     renderMessageAccessory(props) {
         return (
@@ -424,6 +435,16 @@ export default definePlugin({
             voiceState?.channelId === currentUserVoiceState?.channelId ||
             !UserGuildSettingsStore.isChannelMuted(guildId, voiceState?.channelId!)
         );
+    },
+    getPlatformUrl(platform, args) {
+        switch (platform) {
+            case "Xbox":
+                return `https://www.xbox.com/play/user/${encodeURIComponent(args.name)}`;
+            case "Epic Games":
+                return `https://store.epicgames.com/u/${encodeURIComponent(args.id)}`;
+            default:
+                return null;
+        }
     }
 });
 

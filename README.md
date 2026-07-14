@@ -92,9 +92,9 @@ Thank you to [Vendicated](https://github.com/Vendicated) for creating [Vencord](
 
 <a href="https://star-history.com/#Divulgate/Femcord&Timeline">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Divulgate/Femcord&type=Timeline&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Divulgate/Femcord&type=Timeline" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Divulgate/Femcord&type=Timeline" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Divulgate/Femcord&type=Timeline&theme=dark&sealed_token=6jTMwbyFTFYbcJaxS75T2X8yh5CfgqCJR3e3FGcgmB9O-5_zmamJ--36cRYkBIn_GN5CNjb8Lsp6bw7aCRcweA5nGWIQ_Eio_bqoKLP44X0lcFufLzYHonYohV1mX28zfhc-WU_xsImIul4N9oJskQufYzN8NYmz-VWY03n0uzYgqEMP7iq9l4XWF7rU" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Divulgate/Femcord&type=Timeline&sealed_token=6jTMwbyFTFYbcJaxS75T2X8yh5CfgqCJR3e3FGcgmB9O-5_zmamJ--36cRYkBIn_GN5CNjb8Lsp6bw7aCRcweA5nGWIQ_Eio_bqoKLP44X0lcFufLzYHonYohV1mX28zfhc-WU_xsImIul4N9oJskQufYzN8NYmz-VWY03n0uzYgqEMP7iq9l4XWF7rU" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Divulgate/Femcord&type=Timeline&sealed_token=6jTMwbyFTFYbcJaxS75T2X8yh5CfgqCJR3e3FGcgmB9O-5_zmamJ--36cRYkBIn_GN5CNjb8Lsp6bw7aCRcweA5nGWIQ_Eio_bqoKLP44X0lcFufLzYHonYohV1mX28zfhc-WU_xsImIul4N9oJskQufYzN8NYmz-VWY03n0uzYgqEMP7iq9l4XWF7rU" />
   </picture>
 </a>
 
