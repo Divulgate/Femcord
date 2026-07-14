@@ -850,7 +850,7 @@ export const ComponentsIcon = (props?: any) => {
     );
 };
 
-export const LogsIcon = (props?: any) => {
+export const LogsIcon = (props: any = {}) => {
     return (
         <Icon
             {...props}
