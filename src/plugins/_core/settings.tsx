@@ -98,7 +98,7 @@ interface SettingsLayoutBuilder {
 const settings = definePluginSettings({
     settingsLocation: {
         type: OptionType.SELECT,
-        description: "Where to put the Equicord settings section",
+        description: "Where to put the Femcord settings section",
         options: [
             { label: "At the very top", value: "top" },
             { label: "Above the Nitro section", value: "aboveNitro", default: true },
@@ -193,8 +193,8 @@ export default definePlugin({
         const equicordEntries: SettingsLayoutNode[] = [
             buildEntry({
                 key: "equicord_main",
-                title: "Equicord",
-                panelTitle: "Equicord Settings",
+                title: "Femcord",
+                panelTitle: "Femcord Settings",
                 Component: VencordTab,
                 Icon: MainSettingsIcon
             }),
@@ -213,7 +213,7 @@ export default definePlugin({
             !IS_UPDATER_DISABLED && UpdaterTab && buildEntry({
                 key: "equicord_updater",
                 title: "Updater",
-                panelTitle: "Equicord Updater",
+                panelTitle: "Femcord Updater",
                 Component: UpdaterTab,
                 Icon: UpdaterIcon
             }),
@@ -226,7 +226,7 @@ export default definePlugin({
             buildEntry({
                 key: "equicord_cloud",
                 title: "Cloud",
-                panelTitle: "Equicord Cloud",
+                panelTitle: "Vencord/Equicord Cloud",
                 Component: CloudTab,
                 Icon: CloudIcon
             }),
@@ -248,7 +248,7 @@ export default definePlugin({
         const equicordSection: SettingsLayoutNode = {
             key: "equicord_section",
             type: LayoutTypes.SECTION,
-            useTitle: () => "Equicord Settings",
+            useTitle: () => "Femcord Settings",
             buildLayout: () => equicordEntries
         };
 
@@ -314,7 +314,7 @@ export default definePlugin({
     getInfoRows() {
         const { electronVersion, chromiumVersion, getVersionInfo } = this;
 
-        const rows = [`Equicord ${gitHashShort}${getVersionInfo()}`];
+        const rows = [`Femcord ${gitHashShort}${getVersionInfo()}`];
 
         if (electronVersion) rows.push(`Electron ${electronVersion}`);
         if (chromiumVersion) rows.push(`Chromium ${chromiumVersion}`);
