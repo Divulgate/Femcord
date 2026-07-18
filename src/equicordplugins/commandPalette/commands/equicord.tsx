@@ -13,13 +13,13 @@ const SECTION = "Equicord";
 export const equicordCommands: PaletteCommand[] = [
     {
         id: "equicord.settings",
-        title: "Open Equicord Settings",
+        title: "Open Femcord Settings",
         section: SECTION,
         keywords: ["equicord", "vencord", "settings"],
         icon: GearIcon,
         actions: [{
             id: "run",
-            label: "Open Equicord Settings",
+            label: "Open Femcord Settings",
             run: () => void openSettingsPage("equicord_main")
         }]
     },
